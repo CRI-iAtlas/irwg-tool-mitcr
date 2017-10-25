@@ -10,7 +10,7 @@ doc: "run mitcr"
 
 hints:
   DockerRequirement:
-    dockerPull: mitcr
+    dockerPull: quay.io/cri-iatlas/irwg-tool-mitcr
 
 requirements:
   - class: InlineJavascriptRequirement
