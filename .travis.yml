@@ -1,0 +1,19 @@
+sudo: required
+
+env:
+  - REPO="quay.io/cri-iatlas/irwg-tool-mitcr"
+
+services:
+  - docker
+
+before_install:
+  - export TAG=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+  - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, TAG=$BRANCH"
+  - docker build -t ${REPO}:${TAG} .
+  - pip2.7 install --user setuptools==28.8.0
+
+install:
+  - pip2.7 install --user cwl-runner cwltool==1.0.20170217172322 schema-salad==2.2.20170222151604 avro==1.8.1
+
+script:
+  - cwltool --non-strict Dockstore.cwl test.cwl.json
