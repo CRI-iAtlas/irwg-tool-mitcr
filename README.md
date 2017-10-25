@@ -2,4 +2,4 @@
 [![Build Status](https://travis-ci.org/CRI-iAtlas/irwg-tool-mitcr.svg)](https://travis-ci.org/CRI-iAtlas/irwg-tool-mitcr)
 
 # irwg-tool-mitcr
-Dockerized MiTCR tool for Dockstore
+Dockerized MiTCR tool for Dockstore. See the [MiTCR GitHub repo](https://github.com/milaboratory/mitcr) for more information.
