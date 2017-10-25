@@ -17,15 +17,6 @@ requirements:
 
 inputs:
 
-# Do we want to seprate this
-#  java_memory:
-#    type: string
-#    default: "10g"
-#    inputBinding:
-#      position: 1
-#      prefix: -Xmx
-#      itemSeparator: ""
-
   java_memory:
     type: string
     default: "-Xmx10g"
@@ -33,7 +24,6 @@ inputs:
       position: 1
     doc: java runtime maximum heap size
 
-# path in docker image is set as a default argument
   jar_file_path:
     type: string
     default: "/home/ubuntu/mitcr-1.0.3.jar"
@@ -42,13 +32,20 @@ inputs:
       prefix: -jar
     doc: path to jar file in docker image
 
-  pset:
-    type: string
-    default: "flex"
+  pset_string:
+    type: ["null", string]
     inputBinding:
       position: 3
       prefix: --pset
-    doc: "flex" is the default setting for mitcr, also see "jprimer"
+    doc: use this when using prset parameters flex or jprimer, do not use with
+      pset_file
+
+  pset_file:
+    type: ["null", File]
+    inputBinding:
+      position: 3
+      prefix: --pset
+    doc: use this when using a pset file, do not use with pset_string
 
   input_fastq:
     type: File
@@ -56,7 +53,7 @@ inputs:
       position: 4
     doc: MiTCR accepts sequencing data in the fastq format. It can also 
       directly read the data from a gzip ­compressed input file (file name must
-      end with “.gz”). Sequence quality information in the fastq file can be
+      end with ".gz"). Sequence quality information in the fastq file can be
       coded with byte offset equal to 33 (Sanger) or 64 (Solexa), in the later
       case additional ­solexa option should be added to the parameters list.
 
@@ -65,7 +62,16 @@ inputs:
     default: "output.txt"
     inputBinding:
       position: 5
-    doc: name of output file
+    doc: Name of output file. 
+      .cls This format is a binary file containing clonotype information to be
+        viewed with MiTCR Viewer. This output format will be used if output 
+        file name ends with .cls, in all other cases a tab delimited format 
+        will be used. 
+      tab-delimited This format is a plain text file containing clonotype 
+        information formatted as a simple table with columns separated by a tab
+        symbol. Additionally, if the file name ends with .gz (e.g. 
+        cloneset.txt.gz) it will be automatically compressed using gzip. Three
+        verbosity level can be selected using level option
 
   species:
     type: ["null", string]
@@ -133,6 +139,13 @@ inputs:
       prefix: -level
     doc: verbosity level for tab­ delimited output (see “output formats” 
       section for details). Has no effect if cls is used as output format
+  
+  solexa:
+    type: ["null", boolean]
+    inputBinding:
+      prefix: -solexa
+    doc: NOT WORKING, sets the input format of quality strings in fastq files
+      to old illumina format (<= Casava 1.3) with 64 offset
 
 outputs:
 
