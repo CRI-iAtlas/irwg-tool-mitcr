@@ -1,0 +1,7 @@
+{
+    "input_fastq": {
+        "path": "sample.fastq.gz", 
+        "class": "File"
+    }, 
+    "pset_string": "flex"
+}
