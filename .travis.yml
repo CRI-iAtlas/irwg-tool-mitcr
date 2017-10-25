@@ -9,7 +9,7 @@ services:
 before_install:
   - export TAG=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
   - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, TAG=$BRANCH"
-  - docker build -t ${REPO}:${TAG} .
+  - docker build -t ${REPO} .
   - pip2.7 install --user setuptools==28.8.0
 
 install:
